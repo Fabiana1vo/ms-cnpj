@@ -2,6 +2,7 @@ const axios = require('axios')
 require('dotenv').config()
 const baseUrl = process.env.RECEITA_WS_URL
 const CnpjDto = require('../dtos/cnpj.dto')
+const GetCnpjDto = require('../dtos/getCnpj.dto')
 
 exports.CnpjService = async(req) => {
     try {
@@ -23,10 +24,11 @@ exports.CnpjService = async(req) => {
 
 
         const response = await axios.get(url, config)
-        console.log(response)
 
-        //Chamar o dto na estrutura correta e retorna-lo
-        // return response
+        const GetCnpjDTO = await new GetCnpjDto(response.data)
+
+
+        return GetCnpjDTO
 
     } catch (error) {
         throw error;

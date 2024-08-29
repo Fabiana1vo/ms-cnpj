@@ -6,6 +6,7 @@ exports.CnpjController = async(req, res) => {
         const cnpj = req.body
         const response = await CnpjService(cnpj)
             // Adicione seu código aqui
+        console.log(response)
         res.status(200).json({
             data: response
         });
