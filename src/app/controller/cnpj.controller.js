@@ -7,7 +7,7 @@ exports.CnpjController = async(req, res) => {
 
         const response = await CnpjService(cnpj.replace(/\D/g, ''))
             // Adicione seu código aqui
-        console.log(response)
+
         res.status(200).json({
             data: response
         });
