@@ -6,10 +6,10 @@ const GetCnpjDto = require('../dtos/getCnpj.dto')
 
 exports.CnpjService = async(req) => {
     try {
-        const cnpj = req;
+        const cnpj = req.cnpj;
 
-        console.log(cnpj)
-        const CnpjDTO = new CnpjDto(cnpj)
+        const cnpjFormatted = cnpj.replace(/\D/g, '')
+        const CnpjDTO = new CnpjDto(cnpjFormatted)
 
         if (CnpjDTO.isValid() !== true) {
             throw new Error(CnpjDTO.isValid().errors)
@@ -19,7 +19,7 @@ exports.CnpjService = async(req) => {
         const token = process.env.RECEITA_WS_TOKEN
 
 
-        const url = `${baseUrl}/${cnpj.cnpj}/days/${days}`
+        const url = `${baseUrl}/${cnpjFormatted}/days/${days}`
         const config = { headers: { 'Authorization': `Bearer ${token}` } }
 
 
@@ -27,10 +27,13 @@ exports.CnpjService = async(req) => {
 
         const GetCnpjDTO = await new GetCnpjDto(response.data)
 
+        const cnpjReturn = await GetCnpjDTO.getCnpjData()
 
-        return GetCnpjDTO
+
+        return cnpjReturn
 
     } catch (error) {
+
         throw error;
 
     }

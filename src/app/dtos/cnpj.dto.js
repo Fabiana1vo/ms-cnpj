@@ -1,6 +1,6 @@
 class CnpjDto {
     constructor(data) {
-        this.cnpj = data.cnpj
+        this.cnpj = data
     }
 
     isValid() {
